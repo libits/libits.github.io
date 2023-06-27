@@ -15,9 +15,7 @@ mermaid: true
 
 ---
 
-﻿## 	1. Fabric环境搭建
-
-### 1.1 安装docker
+### 1 安装docker
 
 1. 添加阿里的docker镜像仓库
 
@@ -59,7 +57,7 @@ mermaid: true
    $ sudo docker-compose version
    ```
 
-### 1.2 安装go
+### 2 安装go
 
 ```http
 # 安装包下载地址:
@@ -89,7 +87,7 @@ $ . ~/.bashrc
 $ go version
 ```
 
-### 1.3 安装Node.js
+### 3 安装Node.js
 
 1. 官方下载地址
 
