@@ -11,11 +11,7 @@ comments: true
 typora-root-url: ../../libits.github.io
 math: false
 mermaid: true
-
-
 ---
-
-
 
 #  Hyperledger Fabric学习
 
