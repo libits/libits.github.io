@@ -1,6 +1,5 @@
-# B站ID：湾区书记汤姆
+# ID：小李学编程
 该博客是通过 GitHub Pages + Jekyll(主题是Chirpy) 搭建而成的
-下面是关于 Chirpy 的搭建示例~
 
 
 # Chirpy
