@@ -25,3 +25,4 @@ mermaid: true
 - WebSocket使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据
 - 在WebSocket API中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输
 - 需要安装第三方包：go get -u -v github.com/gorilla/websocket
+- websocket既可以服务店向客户端，也可以客户端向服务端 双工；http只能客户端高频向服务端请求数据，单工
