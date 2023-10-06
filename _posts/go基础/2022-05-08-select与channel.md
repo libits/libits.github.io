@@ -4,7 +4,6 @@ date: 2022-05-08 09:35:00 +0800
 categories: [Go]
 tags: [Go基础]
 pin: false
-author: 小李学编程
 
 toc: true
 comments: true
