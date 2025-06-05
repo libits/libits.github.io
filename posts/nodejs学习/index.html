@@ -1,0 +1,499 @@
+<!DOCTYPE html><html lang="zh-CN" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover" ><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="node.js学习" /><meta name="author" content="小李学编程" /><meta property="og:locale" content="zh_CN" /><meta name="description" content="node.js序言" /><meta property="og:description" content="node.js序言" /><link rel="canonical" href="https://libits.github.io/posts/nodejs%E5%AD%A6%E4%B9%A0/" /><meta property="og:url" content="https://libits.github.io/posts/nodejs%E5%AD%A6%E4%B9%A0/" /><meta property="og:site_name" content="小李学编程" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2021-04-05T00:00:00+00:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="node.js学习" /><meta name="twitter:site" content="@twitter_username" /><meta name="twitter:creator" content="@小李学编程" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"小李学编程"},"dateModified":"2023-07-30T09:57:15+00:00","datePublished":"2021-04-05T00:00:00+00:00","description":"node.js序言","headline":"node.js学习","mainEntityOfPage":{"@type":"WebPage","@id":"https://libits.github.io/posts/nodejs%E5%AD%A6%E4%B9%A0/"},"url":"https://libits.github.io/posts/nodejs%E5%AD%A6%E4%B9%A0/"}</script><title>node.js学习 | 小李学编程</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="小李学编程"><meta name="application-name" content="小李学编程"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.20.1/dist/tocbot.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener('change', () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.notify(); } /* flipMode() */ } /* ModeToggle */ const modeToggle = new ModeToggle(); </script><body data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="/assets/config/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title"> <a href="/">小李学编程</a></div><div class="site-subtitle font-italic">这里是小李学编程的博客～</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>首页</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/libits" aria-label="github" target="_blank" rel="noopener noreferrer"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/twitter_username" aria-label="twitter" target="_blank" rel="noopener noreferrer"> <i class="fab fa-twitter"></i> </a> <a href="javascript:location.href = 'mailto:' + ['1002846237','qq.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> 首页 </a> </span> <span>node.js学习</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> 文章</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="搜索..."> </span> <span id="search-cancel" >取消</span></div></div><div id="main-wrapper" class="d-flex justify-content-center"><div id="main" class="container pl-xl-4 pr-xl-4"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4"><div class="post pl-1 pr-1 pl-md-2 pr-md-2"><h1 data-toc-skip>node.js学习</h1><div class="post-meta text-muted"> <span> 发表于 <em class="" data-ts="1617580800" data-df="YYYY/MM/DD" data-toggle="tooltip" data-placement="bottom"> 2021/04/05 </em> </span> <span> 更新于 <em class="" data-ts="1690711035" data-df="YYYY/MM/DD" data-toggle="tooltip" data-placement="bottom"> 2023/07/30 </em> </span><div class="d-flex justify-content-between"> <span> 作者 <em> <a href=""></a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="3326 字"> <em>18 分钟</em>阅读</span></div></div></div><div class="post-content"><h1 id="nodejs序言">node.js序言</h1><blockquote><p>例如在商场项目中客户端浏览器可以完成写页面、发请求、做用户交互等，前端没有能力直接交互数据库。通过Web后台服务器完成对客户端的响应，包括商品数据、订单数据等。学习Node.js的目的就是帮助打开服务器这个黑盒子。只有了解服务器才能配合服务端开发人员完成项目。</p></blockquote><h1 id="nodejs定义">node.js定义</h1><blockquote><p>Node.js is a JavaScript runtime built on Chrome’s V8 JavaScript engine.</p><p>Node.js不是一门语言，不是库，不是框架。</p><p>Node.js是一个JavaScript运行时环境，可以解析和执行JavaScript代码。</p><p>注：以前只有浏览器可以解析执行JavaScript，现在的JavaScript可以完全脱离浏览器来运行，一切都归功于Node.js。构建于Chrome的V8引擎之上。</p><p>浏览器中的JavaScript：</p><p>由EcmaScript、BOM、DOM组成。EcmaScript包括基本语法、if、var、function、Object、Array。</p><p>Node.js中的JavaScript：</p><p>没有BOM和DOM，服务端不处理BOM和DOM。在Node这个JavaScript执行环境中提供了一些服务器级操作API，例如文件读写、网络服务的构建、网络通信、http服务器等处理。</p></blockquote><p><a href="/assets/blog_res/2021-04-05-nodejs学习.assets/wps1.jpg" class="popup img-link "><img data-src="/assets/blog_res/2021-04-05-nodejs学习.assets/wps1.jpg" alt="img" class="lazyload" data-proofer-ignore></a></p><h1 id="nodejs文件操作">node.js文件操作</h1><pre><code class="language-node.js">var foo='bar'
+
+console.log(foo)
+例如
+//1. 使用require方法加载fs核心模块
+ var fs=require（‘fs’）//在Node中如果进行文件操作，就必须引入fs这个核心模块
+//在fs这个核心模块中，就提供了所有的文件操作相关的API，例如fs.readfile就是用来读取文件的
+
+//2. 第一个参数就是要读取的文件路径
+//第二个参数是一个回调函数 
+//error（如果读取失败，error就是错误对象）（如果读取成功，error就是null）
+//Data （如果读取成功，data就是读取到的数据）（如果读取失败，data是undefined/null）
+fs.readFile(‘文件路径’,function(error,data){                     （注意./是回到主目录）
+//默认文件中存储的是二进制数据，有可能转为十六进制，所以可以ton过toStrng方法
+If(error){
+ console.log(‘读取文件失败了’)
+}
+else{
+console.log(data.toString())
+}
+})
+Node.js写文件
+ var fs=require（‘fs’）
+fs.writeFile（‘路径’，’文件内容’,function(error){
+if（error）{
+console.log(‘写入失败’)
+}
+else{
+Console.log(‘写入成功’)
+}
+})
+//文件写入成功error null 失败error为错误对象
+</code></pre><h1 id="nodejs加载web服务器">node.js加载web服务器</h1><h2 id="最简单的http服务"><span class="mr-2">最简单的http服务</span><a href="#最简单的http服务" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><pre><code class="language-node.js">\1. 加载http核心模块
+
+var http=require（‘http’）
+
+\2. 使用http.createServe()方法创建一个web服务器
+
+//返回一个Server 实例
+
+var server =http.createServer()
+
+\3. 服务器要干嘛？
+
+//提供服务：对数据的服务；发请求；接收请求；处理请求；给个反馈（发送响应）
+
+//注册request请求时间
+
+//当客户端请求过来，就会自动触发服务器的request请求时间，然后执行第二个参数，回调处理函数
+
+server.on(‘request’,function(){
+
+console.log(‘收到客户端的请求’)
+
+})
+
+\4. 绑定端口号，启动服务器
+
+server.listen(3000,function(){
+
+console.log(‘服务器启动成功了，可以通过http://127.0.0.1:3000/  来进行访问’)
+
+})
+
+
+
+
+
+
+</code></pre><h2 id="将最简单的服务器升级"><span class="mr-2">将最简单的服务器升级</span><a href="#将最简单的服务器升级" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><pre><code class="language-node.js">var http=require(‘http’)
+
+var server=http.createServer()
+
+//request请求事件处理函数，需要接受两个参数：
+
+//Request请求对象
+
+ //请求对象可以用来获取客户端的一些请求信息，例如请求路径
+
+//Response响应对象
+
+//响应对象可以用来给客户端发送响应消息
+
+ 
+
+ 
+
+server.on(‘request’,function(request，response){
+
+//http://127.0.0.1:3000/ /
+
+// http://127.0.0.1:3000/a /a
+
+  console.log(‘收到客户端的请求了，请求路径是：’+request.url)
+
+//response对象有一个方法：write可以用来给客户端发送响应数据
+
+//write可以使用多次，但是最后一定要使用end来结束响应，否则客户端会一直等待
+
+response.write(‘hello’)
+
+response.write(‘nodejs’)
+
+//告诉客户端，我的话说完了，你可以呈递给用户了
+
+response.end()
+
+ 
+
+//由于现在我们的服务器的能力还非常弱，无论是什么请求，都只能响应hello nodejs
+
+//思考：
+
+//我希望当请求不同的路径的时候响应不同的结果
+
+//例如：
+
+// /index
+
+// /login 登录
+
+// /register 注册
+
+// /haha  哈哈哈  {if(request.url==hahaha) else}
+
+})
+
+ 
+
+server.listen(3000,function(){
+
+console.log(‘服务器启动成功了，可以通过http://127.0.0.1:3000/  来进行访问’)
+
+})
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+解决问题
+
+//由于现在我们的服务器的能力还非常弱，无论是什么请求，都只能响应hello nodejs
+
+//思考：
+
+//我希望当请求不同的路径的时候响应不同的结果
+
+//例如：
+
+// /index
+
+// /login 登录
+
+// /register 注册
+
+// /haha  哈哈哈  {if(request.url==hahaha) else}
+
+ 
+
+ 
+
+ 
+
+ 
+
+重点：：var http=require(‘http’)
+
+ 
+
+//1. 创建Server
+
+var server=http.createServer()
+
+//2. 监听request请求事件，设置请求处理函数
+
+server.on(‘request’,function(req,res){
+
+console.log(‘收到请求了，请求路径是：’+req.url)
+
+ 
+
+//res.write(‘hello’)
+
+//res.write(‘world’)
+
+//res.end()
+
+//上面的方式比较麻烦，推荐使用更简单的方式，直接end的同时发送写的内容
+
+//res.end(‘hello world’)
+
+//根据不同的请求路径发送不同的响应结果
+
+//1.获取请求路径
+
+//req.url获取到的是端口号之后的那一部分路径
+
+//也就是说所有的url都是以  /  开头的
+
+//2.判断路径处理响应
+
+var url=req.url
+
+if(url===’/’){res.end(‘index page’)}
+
+else if(url===’/login’){res.end(‘login page’)}
+
+else {res.end(‘404 NOT FOUND.’)}
+
+ 
+
+if(url ===’/products’){
+
+var product=[
+
+{name:’苹果x’，price：8888}，
+
+{name:’菠萝x’，price：8888}，
+
+{name:’小辣椒x’，price：8888}
+
+]
+
+//响应内容只能是字符串或者二进制数据
+
+//数字、对象、数组、布尔值不行
+
+res.end(JSON.stringify(products))}
+
+ 
+
+})
+
+ 
+
+//3.绑定端口号，启动服务
+
+server.listen(80,function(){
+
+console.log(‘服务器启动成功，可以访问了。’)
+
+})
+</code></pre><h1 id="nodejs中的fs模块">node.js中的fs模块</h1><blockquote><p>支持EcmaScript，没有DOM、BOM</p><p>核心模块</p><p>第三方模块</p><p>用户自定义模块</p></blockquote><p><a href="/assets/blog_res/2021-04-05-nodejs学习.assets/wps2.jpg" class="popup img-link "><img data-src="/assets/blog_res/2021-04-05-nodejs学习.assets/wps2.jpg" alt="img" class="lazyload" data-proofer-ignore></a></p><pre><code class="language-node.js">Node为js提供了很多服务器级别的API，这些API绝大多数都被包装到一个具体名字的核心模块中
+例如文件操作的fs核心模块，http构建的http模块，path路径操作模块，os操作系统信息的模块......
+
+以后只要我说这个模块是一个核心模块，你就要马上想到如何使用它，就必须：
+1.var fs=require(‘fs’)
+2.var http=require(‘http’)
+
+
+举个例子var os=require(‘os’)
+//用来操作路径的
+var path=require(‘path’)
+//extension name
+console.log(path.extname(‘c:/a/b/c/hello.txt’))
+//获取当前机器的CPU信息
+console.log(os.cpu())
+//获取当前系统总内存大小
+console.log(os.totalmem())
+
+
+
+
+如果node可以同时执行2个文件，用a.js运行b.js
+//require是一个方法，它的作用就是用来加载模块的
+//在node中，模块有3种：具名的核心模块（fs、http）；用户自己编写的文件模块；
+//相对路径必须加./      否则报错
+在a.js文件中
+console.log(‘开始执行a.js’)
+require(‘./b.js’)  //.js可以省略，推荐使用
+console.log(‘a执行结束’)
+
+在b.js中
+console.log(‘b.js文件被加载执行了’)
+
+//在node中没有全局作用域，只有模块作用域
+例如a.js文件中定义function add（x，y）
+b.js引用add函数会报错
+//既然是模块作用域，那如何让模块与模块之间进行通信
+//有时候我们加载文件模块的目的不是为了简简单单的执行里面的代码，更重要的是为了使用里面的某个成员
+
+
+例子 加载与导出
+
+在b.js文件中
+var foo=‘bbb’
+exports.foo=’hello’//动态的为exports对象添加foo成员，名字叫foo，值是hello
+//console.log(exports)
+exports.add=function(x,y){
+return x+y
+}
+exports.readFile=function(path,callback){
+console.log(‘文件路径’，path)
+}
+
+在a.js文件中
+/*require方法有2个作用：1.加载文件模块并执行里面的代码 
+2.拿到被加载文件模块导出的接口对象
+在每个文件模块中都提供了一个对象export
+默认export是一个空对象
+你要做的就是把所有需要被外部访问的成员挂载到这个exports对象中
+var bExports=require(‘./b’)
+console.log(bExports.foo)
+console.log(bExports.add(10,30))
+bExports.readFile(‘./b’)
+</code></pre><h2 id="ip地址和端口号概念"><span class="mr-2">ip地址和端口号概念</span><a href="#ip地址和端口号概念" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><blockquote><p>所有联网的程序都需要网络通信</p><p>计算机中只有一个物理网卡，而且同一个局域网中，网卡地址必须是唯一的。</p><p>网卡是通过唯一的ip地址进行定位的。</p><p>总结：IP地址用来定位计算机，端口号用来定位具体的应用程序</p><p>（所有需要联网通信的软件都必须具有端口号）</p><p>var http=require(‘http’)</p><p>var server=http.createServer()</p><p>server.on(‘request’,function(req,res){</p><p>console.log(‘收到请求了，请求路径是：’+req.url)</p><p>console.log(‘请求我的客户端地址是：’,req.socket.remoteAddress,req.socket.remotePort)</p><p>})</p><p>var url=req.url</p><p>if(url===’/’){res.end(‘index page’)}</p><p>else if(url===’/login’){res.end(‘login page’)}</p><p>else {res.end(‘404 NOT FOUND.’)}</p><p>if(url ===’/products’){</p><p>var product=[</p><p>{name:’苹果x’，price：8888}，</p><p>{name:’菠萝x’，price：8888}，</p><p>{name:’小辣椒x’，price：8888}</p><p>]</p><p>//响应内容只能是字符串或者二进制数据</p><p>//数字、对象、数组、布尔值不行</p><p>res.end(JSON.stringify(products))}</p><p>})</p><p>//3.绑定端口号，启动服务</p><p>server.listen(3000,function(){</p><p>console.log(‘服务器启动成功，可以访问了。’)</p><p>})</p></blockquote><h2 id="响应内容类型content-type"><span class="mr-2">响应内容类型Content-type</span><a href="#响应内容类型content-type" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><pre><code class="language-node.js">模板
+
+var http=require(‘http’)
+
+var server=http.createServer()
+
+server.on(‘request’,function(req,res){
+
+ 
+
+})
+
+ 
+
+server.listen(3000,function(){
+
+Console.log(‘Server is running.’)
+
+})
+
+ 
+
+ 
+
+可以同时开启多个服务，但一定要确认不同服务占用的端口号不一致才可以
+
+ 
+
+例子
+
+var http=require(‘http’)
+
+var server=http.createServer()
+
+server.on(‘request’,function(req,res){
+
+ 
+
+//在http协议中，Content-Type就是用来告知对方我给你发送的数据内容是什么类型
+
+//res.setHeader(‘Content-Type’,’text/plain;charset=utf-8’)
+
+ //res.end(‘hello world世界’)
+
+var url=req.url
+
+if(url===’/plain’){
+
+//text/plain普通文本的意思
+
+res.setHeader(‘Content-Type’,’text/plain;charset=utf-8’)
+
+res.end(‘hello world世界’)
+
+}else if(url===’/html’){
+
+//如果你发送的是html格式的字符串，则也要告诉浏览器我给你发送的是text/html格式的
+
+//内容
+
+res.end(‘&lt;p&gt;hello html&lt;p&gt;’)
+
+}
+
+//在服务器默认发送的数据，其实是utf8编码的内容
+
+//但是浏览器不知道你是utf8编码的内容
+
+//浏览器在不知道服务器响应内容的编码的情况下，会按照当前操作系统的默认编码下去解//析,中文操作系统默认是gbk
+
+})
+
+server.listen(3000,function(){
+
+Console.log(‘Server is running.’)
+
+})
+
+ 
+
+1.结合fs发送文件中的数据
+
+\2. Content-type不一样
+
+http://tool.oschina.net/commons
+
+不同的资源对应的Content-Type是不一样的
+
+图片不需要指定编码，一般只为字符数据才指定编码
+
+例子2：
+
+ 
+
+http-fs.js
+
+var http=require(‘http’)
+
+var fs=require(‘fs’)
+
+var server=http.createServer()
+
+server.on(‘request’,function(req,res){
+
+//index.html
+
+var url=req.url
+
+if(url==’/’){
+
+//我们要发送的是文件的内容
+
+fs.readFile(‘路径/index.html’,function(err,data){
+
+if(err){
+
+res.setHeader(‘Content-Type’,’text/plain;charset=’utf-8’)
+
+res.end(‘文件读取失败，请稍后重试！’)
+
+}else{
+
+//data默认是二进制数据，可以通过.toString转为砸门能认识的字符串
+
+//res.end()支持2种数据类型，一种是二进制，一种是字符串
+
+res.setHeader(‘Content-Type’,’text/html;charset=utf-8’)
+
+res.end(data)
+
+}
+
+})
+
+}else if(url==’/picture’){
+
+//url:统一资源定位符
+
+//一个url最终其实是要对应一个资源的
+
+fs.readFile(‘./路径/baby.jpg’,function(err,data){
+
+if(err){
+
+res.setHeader(‘Content-Type’,’text/plain;charset=utf-8’)
+
+res.end(‘文件读取失败，请稍后重试！’)
+
+}else{
+
+//data默认是二进制，可以通过.toString转为砸门能认识的字符串
+
+//res.end()支持2种数据类型，一种是二进制，一种是字符串
+
+//图片就不需要指定编码了，因为我们常说的编码一般指的是：字符编码
+
+res.setHeader(‘Content-Type’,’image/jpeg’)
+
+res.end(data)
+
+ 
+
+}
+
+})
+
+ 
+
+}
+
+ 
+
+ 
+
+})
+
+server.listen(3000,function(){
+
+console.log(‘Server is running.’)
+
+})
+</code></pre><h2 id="回顾"><span class="mr-2">回顾</span><a href="#回顾" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><blockquote><p>回顾：</p><p>node中的javascript</p><p>EcmaScript：变量；方法；数据类型；内置对象；Array；Object；Date；Math</p><p>模块系统：</p><p>\1. 在Node中没有全局作用域概念；</p><p>2.在node中只能通过require方法来加载执行多个JavaScript脚本文件</p><p>3.require加载只能是执行其中的代码，文件与文件之间由于是模块作用域，所以不会有污染的问题，模块完全是封闭的，外部无法访问内部，内部也无法访问外部</p><p>\4. 模块作用域固然带来了一些好处，可以加载执行多个文件，可以完全避免变量命名冲突污染的问题</p><p>5.但是某些情况下模块与模块之间是需要进行通信的</p><p>6.在每个模块内都提供了一个对象’exports’,该对象默认是一个空对象，你要做的是把需要被外部访问使用的成员手动的挂载到‘exports’接口对象中，然后谁来‘require’这个模块，谁就可以得到模块内部的‘exports’接口对象</p><p>核心模块</p><p>是由node提供的一个个的具名的模块，它们都有自己特有的名称标识，例如fs（文件操作模块）、http网络服务构建模块、os（操作系统信息模块）、path（路径处理模块）</p><p>。。。。。。。。</p><p>所有核心模块在使用的时候必须手动的先使用‘require’方法来加载，然后才可以使用，例如var fs=require(‘fs’)</p><p>http:require;端口号</p><p>Content-Type:服务器最好把每次响应的数据是什么内容类型都告诉客户端，而且要正确的告诉，不同的资源对应的Content-Type不一样。对于文本类型的数据，最好都加上编码，目的是为了防止中文解析乱码问题</p><p>通过网络发送文件内容（发送的不是文件–http结合fs发送文件</p><p>当浏览器收到服务器响应内容之后，就会根据你的Content-Type进行对应的解析处理</p></blockquote></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/'>区块链</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/node-js/" class="post-tag no-text-decoration" >node.js</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 本文由作者按照 <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> 进行授权</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=node.js%E5%AD%A6%E4%B9%A0%20-%20%E5%B0%8F%E6%9D%8E%E5%AD%A6%E7%BC%96%E7%A8%8B&url=https%3A%2F%2Flibits.github.io%2Fposts%2Fnodejs%25E5%25AD%25A6%25E4%25B9%25A0%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=node.js%E5%AD%A6%E4%B9%A0%20-%20%E5%B0%8F%E6%9D%8E%E5%AD%A6%E7%BC%96%E7%A8%8B&u=https%3A%2F%2Flibits.github.io%2Fposts%2Fnodejs%25E5%25AD%25A6%25E4%25B9%25A0%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Flibits.github.io%2Fposts%2Fnodejs%25E5%25AD%25A6%25E4%25B9%25A0%2F&text=node.js%E5%AD%A6%E4%B9%A0%20-%20%E5%B0%8F%E6%9D%8E%E5%AD%A6%E7%BC%96%E7%A8%8B" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="分享链接" data-title-succeed="链接已复制！"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">最近更新</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/docker/">docker</a><li><a href="/posts/K8s(1)/">K8s基础(1)</a><li><a href="/posts/%E7%96%91%E9%9A%BE%E8%A7%A3%E6%83%91/">疑难解惑</a><li><a href="/posts/react%E5%85%A5%E9%97%A8/">React入门</a><li><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">复习计算机网络</a></ul></div><div id="access-tags"><div class="panel-heading">热门标签</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/go%E5%B9%B6%E5%8F%91/">Go并发</a> <a class="post-tag" href="/tags/go%E7%AE%97%E6%B3%95/">Go算法</a> <a class="post-tag" href="/tags/go%E5%9F%BA%E7%A1%80/">Go基础</a> <a class="post-tag" href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">以太坊</a> <a class="post-tag" href="/tags/golang%E9%9D%A2%E7%BB%8F/">golang面经</a> <a class="post-tag" href="/tags/go%E7%BD%91%E7%BB%9C/">Go网络</a> <a class="post-tag" href="/tags/hyperledger-fabric/">Hyperledger Fabric</a> <a class="post-tag" href="/tags/kafka/">kafka</a> <a class="post-tag" href="/tags/mysql/">Mysql</a> <a class="post-tag" href="/tags/raft/">raft</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">文章内容</div><nav id="toc"></nav></div><script src="https://cdn.jsdelivr.net/npm/tocbot@4.20.1/dist/tocbot.min.js"></script></div></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4 mt-5"><div id="related-posts" class="mb-2 mb-sm-4"><h3 class="pt-2 mb-4 ml-1" data-toc-skip>相关文章</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/web3%E5%9F%BA%E7%A1%80%E8%AE%A4%E8%AF%86/"><div class="card-body"> <em class="small" data-ts="1687651200" data-df="YYYY/MM/DD" > 2023/06/25 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>web3基础知识</h3><div class="text-muted small"><p> web3 web3：可读、可写、可拥有 使用区块链技术、智能合约、去中心化、防止篡改 功能： 加密钱包 助记词/私钥； 公钥：链上地址/用户名字 应用 NFT:非同质化货币，不能互换</p></div></div></a></div><div class="card"> <a href="/posts/Hyperledger-Fabric%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"><div class="card-body"> <em class="small" data-ts="1614556800" data-df="YYYY/MM/DD" > 2021/03/01 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Hyperledger fabric环境搭建</h3><div class="text-muted small"><p> 1 安装docker 添加阿里的docker镜像仓库 # 添加阿里的docker镜像仓库 $ curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add - $ sudo add-apt-repository &quot;deb [arch=amd64] https:...</p></div></div></a></div><div class="card"> <a href="/posts/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%9F%BA%E7%A1%80/"><div class="card-body"> <em class="small" data-ts="1688601600" data-df="YYYY/MM/DD" > 2023/07/06 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>以太坊基础</h3><div class="text-muted small"><p> 以太坊介绍 https://ethereum.org/en 从Pow转为Pos bitcoin 以太坊 基于交易的账本，存在double spending attack 基于账户的模型，存在replay attack 防范：记录发布交易次数nonce ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/regext/" class="btn btn-outline-primary" prompt="上一篇"><p>regext</p></a> <a href="/posts/encodingjson/" class="btn btn-outline-primary" prompt="下一篇"><p>encoding/json</p></a></div></div></div></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">热门标签</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/go%E5%B9%B6%E5%8F%91/">Go并发</a> <a class="post-tag" href="/tags/go%E7%AE%97%E6%B3%95/">Go算法</a> <a class="post-tag" href="/tags/go%E5%9F%BA%E7%A1%80/">Go基础</a> <a class="post-tag" href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">以太坊</a> <a class="post-tag" href="/tags/golang%E9%9D%A2%E7%BB%8F/">golang面经</a> <a class="post-tag" href="/tags/go%E7%BD%91%E7%BB%9C/">Go网络</a> <a class="post-tag" href="/tags/hyperledger-fabric/">Hyperledger Fabric</a> <a class="post-tag" href="/tags/kafka/">kafka</a> <a class="post-tag" href="/tags/mysql/">Mysql</a> <a class="post-tag" href="/tags/raft/">raft</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><footer><div class="container pl-lg-4 pr-lg-4"><div class="d-flex justify-content-between align-items-center text-muted ml-md-3 mr-md-3"><div class="footer-left"><p class="mb-0"> © 2025 <a href="https://twitter.com/username">libits</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0">本站由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，采用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> 主题。</p></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js"></script> <script> (function () { function updateMermaid(event) { if (event.source === window && event.data && event.data.direction === ModeToggle.ID) { const mode = event.data.message; if (typeof mermaid === "undefined") { return; } let expectedTheme = (mode === ModeToggle.DARK_MODE ? "dark" : "default"); let config = {theme: expectedTheme}; /* Re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function () { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } let initTheme = "default"; if ($("html[data-mode=dark]").length > 0 || ($("html[data-mode]").length == 0 && window.matchMedia("(prefers-color-scheme: dark)").matches)) { initTheme = "dark"; } let mermaidConf = { theme: initTheme /* <default|dark|forest|neutral> */ }; /* Create mermaid tag */ $("pre").has("code.language-mermaid").each(function () { let svgCode = $(this).children().html(); $(this).addClass("unloaded"); $(this).after(`<pre class=\"mermaid\">${svgCode}</pre>`); }); mermaid.initialize(mermaidConf); window.addEventListener("message", updateMermaid); })(); </script><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">搜索结果为空</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lazysizes@5.3.2/lazysizes.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/zh.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/unregister.js"></script>

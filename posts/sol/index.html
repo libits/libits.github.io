@@ -1,0 +1,1532 @@
+<!DOCTYPE html><html lang="zh-CN" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7"><meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover" ><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="solidity" /><meta name="author" content="小李学编程" /><meta property="og:locale" content="zh_CN" /><meta name="description" content="solidity开发环境" /><meta property="og:description" content="solidity开发环境" /><link rel="canonical" href="https://libits.github.io/posts/sol/" /><meta property="og:url" content="https://libits.github.io/posts/sol/" /><meta property="og:site_name" content="小李学编程" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2023-07-07T00:00:00+00:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="solidity" /><meta name="twitter:site" content="@twitter_username" /><meta name="twitter:creator" content="@小李学编程" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"小李学编程"},"dateModified":"2023-08-12T16:22:25+00:00","datePublished":"2023-07-07T00:00:00+00:00","description":"solidity开发环境","headline":"solidity","mainEntityOfPage":{"@type":"WebPage","@id":"https://libits.github.io/posts/sol/"},"url":"https://libits.github.io/posts/sol/"}</script><title>solidity | 小李学编程</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="小李学编程"><meta name="application-name" content="小李学编程"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.20.1/dist/tocbot.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener('change', () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.notify(); } /* flipMode() */ } /* ModeToggle */ const modeToggle = new ModeToggle(); </script><body data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="/assets/config/avatar.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title"> <a href="/">小李学编程</a></div><div class="site-subtitle font-italic">这里是小李学编程的博客～</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>首页</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>分类</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tags ml-xl-3 mr-xl-3 unloaded"></i> <span>标签</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>归档</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info ml-xl-3 mr-xl-3 unloaded"></i> <span>关于</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/libits" aria-label="github" target="_blank" rel="noopener noreferrer"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/twitter_username" aria-label="twitter" target="_blank" rel="noopener noreferrer"> <i class="fab fa-twitter"></i> </a> <a href="javascript:location.href = 'mailto:' + ['1002846237','qq.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> 首页 </a> </span> <span>solidity</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> 文章</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="搜索..."> </span> <span id="search-cancel" >取消</span></div></div><div id="main-wrapper" class="d-flex justify-content-center"><div id="main" class="container pl-xl-4 pr-xl-4"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4"><div class="post pl-1 pr-1 pl-md-2 pr-md-2"><h1 data-toc-skip>solidity</h1><div class="post-meta text-muted"> <span> 发表于 <em class="" data-ts="1688688000" data-df="YYYY/MM/DD" data-toggle="tooltip" data-placement="bottom"> 2023/07/07 </em> </span> <span> 更新于 <em class="" data-ts="1691857345" data-df="YYYY/MM/DD" data-toggle="tooltip" data-placement="bottom"> 2023/08/13 </em> </span><div class="d-flex justify-content-between"> <span> 作者 <em> <a href=""></a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="10173 字"> <em>56 分钟</em>阅读</span></div></div></div><div class="post-content"><h2 id="solidity开发环境"><span class="mr-2">solidity开发环境</span><a href="#solidity开发环境" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ol><li>Solidity编辑器：Solidity编辑器是一种专门用于编写和编辑Solidity代码的编辑器。常用的Solidity编辑器包括Visual Studio Code、Atom和Sublime Text。<li>以太坊开发环境：以太坊开发环境（Ethereum Development Environment）是一种专门用于以太坊开发的工具，可以用于部署、测试和调试智能合约。常用的以太坊开发环境包括Truffle、Embark和Buidler （Hardhat）。<li>以太坊虚拟机：以太坊虚拟机（Ethereum Virtual Machine，EVM）是以太坊区块链的运行环境，用于在以太坊区块链上运行智能合约。常用的以太坊虚拟机包括ganache-cli和geth。<li>以太坊浏览器：以太坊浏览器是一种用于浏览、搜索和交互以太坊区块链数据的工具。常用的以太坊浏览器包括Etherscan、Etherchain和Blockchain Explorer。</ol><h3 id="hardhat"><span class="mr-2">Hardhat</span><a href="#hardhat" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>https://hardhat.org/</p><p>ETH基金会资助的项目，以前的名字是Builder 技术：Javascript，Web3.js和Ethers.js插件，OpenZeppelin可升级合同插件， Etherscan插件，区块链分叉 区块链：Hardhat运行时环境/本地、测试网、主网</p><h3 id="truffle"><span class="mr-2">Truffle</span><a href="#truffle" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>https://trufflesuite.com/</p><p>使用最广泛的平台；最近被ConsenSys收购（2020年11月） 技术：Javascript，Web3.js，OpenZeppelin可升级合同插件，Etherscan插件，区块链分叉 区块链：Ganache /本地，测试网，主网</p><h3 id="embark"><span class="mr-2">Embark</span><a href="#embark" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>具有大量功能的JavaScript框架用于前端开发 技术：JavaScript，Web3.js，代理合约支持 区块链：Ganache /本地，测试网，主网</p><h2 id="remix基本使用"><span class="mr-2">Remix基本使用</span><a href="#remix基本使用" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p><a href="https://remix.ethereum.org/">官网</a> https://remix.ethereum.org</p><h2 id="本地部署remix-ide"><span class="mr-2">本地部署ReMix IDE</span><a href="#本地部署remix-ide" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>在本地部署Remix需要准备两个东西：一个是Remix-project，可以理解为Remix的前端；另一个是Remixd，可以理解为Remix的后端，它们的Github仓库地址分别是： https://github.com/ethereum/remix-project https://github.com/ethereum/remix-project/tree/master/libs/remixd</p><h3 id="docker安装"><span class="mr-2">Docker安装</span><a href="#docker安装" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-dockerfile highlighter-rouge"><div class="code-header"> <span data-label-text="Dockerfile"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>docker pull remixproject/remix-ide:latest
+docker run -p 8080:80 remixproject/remix-ide:latest
+</pre></table></code></div></div><h3 id="docker-compose安装"><span class="mr-2">docker-compose安装</span><a href="#docker-compose安装" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-docker highlighter-rouge"><div class="code-header"> <span data-label-text="Docker"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>docker-compose pull
+docker-compose up -d
+</pre></table></code></div></div><p>部署Remixd</p><p>Remixd 的安装使用步骤如下：</p><p>1.通过 npm 或者 yarn 安装 Remixd（建议用yarn）</p><p>npm 命令：</p><div class="language-powershell highlighter-rouge"><div class="code-header"> <span data-label-text="Powershell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">npm</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="nt">-g</span><span class="w"> </span><span class="err">@</span><span class="nx">remix-project/remixd</span><span class="w">
+</span><span class="n">yarn</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nx">global</span><span class="w"> </span><span class="err">@</span><span class="nx">remix-project/remixd</span><span class="w">
+</span></pre></table></code></div></div><p>2.启动 Remix-IDE</p><div class="language-powershell highlighter-rouge"><div class="code-header"> <span data-label-text="Powershell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">remixd</span><span class="w"> </span><span class="nt">-s</span><span class="w"> </span><span class="o">.</span><span class="nx">/shared_project</span><span class="w"> </span><span class="nt">-u</span><span class="w"> </span><span class="nx">http://localhost:8080</span><span class="w">
+</span></pre></table></code></div></div><p>3.在 Remix-IDE 上点两下</p><p>选择相应环境；</p><p>Connect to Localhost，连接本地环境</p><h2 id="solidity基础介绍"><span class="mr-2">solidity基础介绍</span><a href="#solidity基础介绍" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="api文档"><span class="mr-2">api文档</span><a href="#api文档" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>https://solidity-by-example.org/</p><h3 id="变量"><span class="mr-2">变量</span><a href="#变量" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ul><li><p><strong>局部变量</strong></p><li><ul><li>在函数内部声明<li>不存储到链上</ul><li><p><strong>状态变量</strong></p><li><ul><li>在函数外部声明<li>状态变量是永久地存储在链上的值。</ul><li><p><strong>全局变量</strong></p><li><ul><li>内置提供有关区块链的信息比如<code class="language-plaintext highlighter-rouge">block</code>、<code class="language-plaintext highlighter-rouge">msg</code>等</ul></ul><p>这些是全局工作区中存在的特殊变量，提供有关区块链和交易属性的信息。</p><p><strong>智能合约可以获得的区块信息</strong></p><div class="table-wrapper"><table><thead><tr><th style="text-align: left">名称<th style="text-align: left">返回<tbody><tr><td style="text-align: left">blockhash(uint blockNumber) returns (bytes32)<td style="text-align: left">给定区块的哈希值 – 只适用于256最近区块, 不包含当前区块。<tr><td style="text-align: left">block.coinbase (address payable)<td style="text-align: left">当前区块矿工的地址<tr><td style="text-align: left">block.difficulty (uint)<td style="text-align: left">当前区块的难度<tr><td style="text-align: left">block.gaslimit (uint)<td style="text-align: left">当前区块的gaslimit<tr><td style="text-align: left">block.number (uint)<td style="text-align: left">当前区块的number<tr><td style="text-align: left">block.timestamp (uint)<td style="text-align: left">当前区块的时间戳，为unix纪元以来的秒<tr><td style="text-align: left">gasleft() returns (uint256)<td style="text-align: left">剩余 gas<tr><td style="text-align: left">msg.data (bytes calldata)<td style="text-align: left">完成 calldata<tr><td style="text-align: left">msg.sender (address payable)<td style="text-align: left">消息发送者 (当前 caller)<tr><td style="text-align: left">msg.sig (bytes4)<td style="text-align: left">calldata的前四个字节 (function identifier)<tr><td style="text-align: left">msg.value (uint)<td style="text-align: left">当前消息的wei值<tr><td style="text-align: left">now (uint)<td style="text-align: left">当前块的时间戳<tr><td style="text-align: left">tx.gasprice (uint)<td style="text-align: left">交易的gas价格<tr><td style="text-align: left">tx.origin (address payable)<td style="text-align: left">交易的发送方</table></div><p><a href="/assets/blog_res/2023-07-07-sol.assets/image-20230812225336223.png" class="popup img-link "><img data-src="/assets/blog_res/2023-07-07-sol.assets/image-20230812225336223.png" alt="image-20230812225336223" class="lazyload" data-proofer-ignore></a></p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract Variables {
+
+
+    function doSomething() public view returns(uint, address) {
+
+        // 内置全局变量
+        uint timestamp = block.timestamp; // 获取区块时间戳
+        address sender = msg.sender; // 获取区块地址
+        return (timestamp,sender);
+    }
+}
+</pre></table></code></div></div><p>状态变量</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract Variables {
+    uint public nun = 123;
+
+    function doSomething() public{
+        nun ++;
+    }
+}
+</pre></table></code></div></div><p>局部变量</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract Variables {
+    function doSomething() public pure  returns(uint){
+        uint num = 123;
+        num ++;
+        // 局部变量不保存每次使用都重置
+        return num;
+    }
+}
+</pre></table></code></div></div><p>在为变量命名时，请记住以下规则。</p><ul><li>不应使用 Solidity 保留关键字作为变量名。例如，<code class="language-plaintext highlighter-rouge">break</code>或<code class="language-plaintext highlighter-rouge">boolean</code>变量名无效。<li>不应以数字(0-9)开头，必须以字母或下划线开头。例如，<code class="language-plaintext highlighter-rouge">123test</code>是一个无效的变量名，但是<code class="language-plaintext highlighter-rouge">_123test</code>是一个有效的变量名。<li>变量名区分大小写。例如，<code class="language-plaintext highlighter-rouge">Name</code>和<code class="language-plaintext highlighter-rouge">name</code>是两个不同的变量。</ul><h3 id="solidity可见性修饰符"><span class="mr-2">solidity可见性修饰符</span><a href="#solidity可见性修饰符" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ol><li>public – 所有合约与账号都可以调用<li>private -只有在定义该函数的合约可以调用<li>internal- 当前合约或者继承该合约的，类似java 里面的protected 关键字。<li>external – 只有其他合约或者账号可以调用,定义该函数的合约不能调用,除非使用 this 关键字</ol><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT; 
+// 添加智能合约的许可协议
+// pragma solidity ^0.8.7; 
+pragma solidity &gt;=0.7.0&lt;0.9.0;
+
+// 局部变量
+// 在函数内部的临时变量 需改不会记录 也不会消耗gas费用
+// 状态变量 
+  // 保存在区块链上的变量 每次修改都会消耗gas费用
+// 全局变量(内置变量)
+contract Variable {
+    // 状态变量
+    uint public num;
+
+    address public onwer;
+    
+    uint public value;
+
+    constructor(uint _num) payable {
+        num = _num;
+        onwer = msg.sender;
+        value = msg.value;
+    }
+    //public、external(外部可以调用)
+    function setNum(uint _num) public {
+        num = _num;
+    } 
+    // 局部变量   view(函数体里面使用了状态变量))/pure
+    function setLocalNum() public pure returns(uint) {
+        uint age = 666;
+        age ++;
+        return age;
+    }
+}
+</pre></table></code></div></div><h3 id="函数"><span class="mr-2">函数</span><a href="#函数" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ol><li>函数是代码的可执行单元。函数通常在合约内部定义，但也可以在合约外定义。</ol><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT; 
+pragma solidity &gt;=0.7.0&lt;0.9.0;
+
+contract Function_test {
+    uint age;
+
+    constructor() {
+        age = 18;
+    }
+    // 对外可见的修改状态变量的方法
+    function setAge() public {
+        age += 1;
+    }
+    // 对外可见的使用状态变量的方法 view
+    function getAge() public view returns(uint) {
+        return age;
+    }
+    // 对外可见的不适用状态变量的方法
+    function getAge2() public pure returns(uint ,string memory){
+        return (66,"abc");
+    }
+}
+</pre></table></code></div></div><ol><li>Solidity有两个关键字与函数输出相关：return和returns，他们的区别在于：</ol><blockquote><p>returns加在函数名后面，用于声明返回的变量类型及变量名。</p><p>return用于函数主体中，返回指定的变量。</p></blockquote><ol><li>view和pure的用法</ol><blockquote><p>getter 类型的函数可以被view 或者 pure 修饰。 view 修饰的函数不能改变状态变量。pure 则既不能改变状态变量，也不取读取状态变量。</p></blockquote><h3 id="错误errors"><span class="mr-2">错误Errors</span><a href="#错误errors" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><ul><li><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>assert(bool condition)
+</pre></table></code></div></div><p>如果不满足条件，此方法调用将导致一个无效的操作码，对状态所做的任何更改将被还原。这个方法是用来处理内部错误的。</p><li><code class="language-plaintext highlighter-rouge">require(bool condition)</code> − 如果不满足条件，此方法调用将恢复到原始状态。此方法用于检查输入或外部组件的错误。<li><code class="language-plaintext highlighter-rouge">require(bool condition, string memory message)</code> − 如果不满足条件，此方法调用将恢复到原始状态。此方法用于检查输入或外部组件的错误。它提供了一个提供自定义消息的选项。<li><code class="language-plaintext highlighter-rouge">revert()</code> − 此方法将中止执行并将所做的更改还原为执行前状态。<li><code class="language-plaintext highlighter-rouge">revert(string memory reason)</code> − 此方法将中止执行并将所做的更改还原为执行前状态。它提供了一个提供自定义消息的选项。</ul></blockquote><p>回退状态：但是gas费用是需要消耗</p><p>assert 合约内部错误</p><p>require 外部参数错误</p><p>assert 内部错误</p><p>Solidity 为应对失败，允许用户定义 <code class="language-plaintext highlighter-rouge">error</code> 来描述错误的名称和数据。 跟用错误字符串相比， <code class="language-plaintext highlighter-rouge">error</code> 更便宜并且允许你编码额外的数据，还可以用 NatSpec 为用户去描述错误。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.4;
+
+error NotFoundUser(address account, uint256 uid);
+
+contract Token {
+    mapping(address =&gt; uint256) users;
+
+    function getUser(address _account, uint256 _uid) public view {
+        uint256 uid = users[msg.sender];
+        if (uid &lt; _uid) {
+            revert NotFoundUser(_account, _uid);
+        }
+    }
+}
+</pre></table></code></div></div><h3 id="事件"><span class="mr-2">事件</span><a href="#事件" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ol><li><p>事件是能方便地调用以太坊虚拟机日志功能的接口。</p><li><p>solidity默认没有consol.log 或者 print 类似的事件系统 但是我们可以通过，注册事件查看对应的log日志</p></ol><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract Variables {
+
+    event Log(address);
+    event Log(uint);
+
+    function doSomething() public {
+        uint timestamp = block.timestamp; // Current block timestamp
+        address sender = msg.sender; // address of the caller
+        emit Log(timestamp);
+        emit Log(sender);
+    }
+}
+</pre></table></code></div></div><h2 id="变量的数据位置"><span class="mr-2">变量的数据位置</span><a href="#变量的数据位置" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="数据位置"><span class="mr-2">数据位置</span><a href="#数据位置" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>在合约中声明和使用的变量都有一个数据位置，指明变量值应该存储在哪里。合约变量的数据位置将会影响Gas消耗量。</p><p>Solidity 提供4种类型的数据位置。</p><ul><li>Storage<li>Memory<li>Calldata<li>Stack</ul><h4 id="storage"><span class="mr-2">Storage</span><a href="#storage" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>该存储位置存储永久数据，这意味着该数据可以被合约中的所有函数访问。可以把它视为计算机的硬盘数据，所有数据都永久存储。</p><p>保存在存储区(Storage)中的变量，以智能合约的状态存储，并且在函数调用之间保持持久性。与其他数据位置相比，存储区数据位置的成本较高。</p><ul><li>存储中的数据是永久存在的。存储是一个key/value库<li>存储中的数据写入区块链，因此会修改状态，这也是存储使用成本高的原因。<li>占用一个256位的槽需要消耗<font color="red">20000gas</font><li>修改一个已经使用的存储槽的值，需要消耗<font color="red">5000 gas</font>&gt;<li>当清零一个存储槽时，会返还一定数量的gas<li>存储按256位的槽位分配，即使没有完全使用一个槽位，也需要支付其开销</ul><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract DataLocations {
+    struct MyStruct {
+        uint256 foo;
+    }
+    mapping(uint256 =&gt; MyStruct) public myStructs;
+
+    function funcStorage(uint8 _idx, uint _val) public {
+        // 从映射中获取结构体,storage 变量改变会影响状态变量的值
+        MyStruct storage myStruct = myStructs[_idx];
+        myStruct.foo = _val;
+    }
+}
+</pre></table></code></div></div><h4 id="memory"><span class="mr-2">Memory</span><a href="#memory" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>内存位置是临时数据，比存储位置便宜。它只能在函数中访问。</p><p>通常，内存数据用于保存临时变量，以便在函数执行期间进行计算。一旦函数执行完毕，它的内容就会被丢弃。你可以把它想象成每个单独函数的内存(RAM)。</p><ul><li>内存是一个字节数组，槽大小位256位（32字节）<li>数据仅在函数执行期间存在，执行完毕后就被销毁<li>读或写一个内存槽都会消耗<font color="red">3gas</font>&gt;<li>为了避免矿工的工作量过大，22个操作之后的单操作成本会上涨</ul><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract DataLocations {
+    struct MyStruct {
+        uint256 foo;
+    }
+    mapping(uint256 =&gt; MyStruct) public myStructs;
+
+    function funcStorage(uint8 _idx, uint _val) public view returns (MyStruct memory) {
+        // 从映射中获取结构体,storage 变量改变会影响状态变量的值
+        MyStruct memory myStruct = myStructs[_idx];
+        myStruct.foo = _val;
+        return myStruct;
+    }
+}
+</pre></table></code></div></div><h4 id="calldata"><span class="mr-2">Calldata</span><a href="#calldata" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>Calldata是不可修改的非持久性数据位置，所有传递给函数的值，都存储在这里。此外，Calldata是外部函数的参数(而不是返回参数)的默认位置。</p><p>Calldata一般作为<code class="language-plaintext highlighter-rouge">external</code>或者<code class="language-plaintext highlighter-rouge">public</code>函数的参数使用。</p><blockquote><p>特征</p><ul><li>只能用于函数声明参数(而不是函数逻辑)<li>它是不可变的(不能被覆盖和更改)<li>它必须用于external函数的动态参数<li>它是临时的(该值在事务完成后销毁)<li>它是最便宜的存储位置</ul><p>这里如果指定为<code class="language-plaintext highlighter-rouge">memory</code>类型也是可以的，但是<code class="language-plaintext highlighter-rouge">Calldata</code>是const的，而且它最为便宜，所以用Calldata</p></blockquote><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.4;
+
+contract Person{
+    struct State{
+        //状态类型可用view
+         string name;
+         string gender;
+    }
+    State public state;
+    //public/private/  external（外部可见）
+    //calldate(代价最小，不能用于返回值的类型)/memory
+    //string是复合类型 不是值类型
+function setState(string calldata _name,string calldata _gender)external{
+    state.name =_name;
+    state.gender=_gender;
+}
+//string用作函数返回值的存储位置
+function getName()external view returns(string memory){
+    return state.name;
+}
+//string用作函数内临时变量的存储位置
+function changeGender(uint value) external{
+    //require不满足时候消耗的费用可以退回
+    require(
+        value == 0 || value == 1,
+        "Person:Input value error"
+    );
+    //string复合类型必须写内存位置 例如memory
+    string memory newGender;
+    if(value==0){
+        newGender ="female";
+    }else{
+        state.gender="male";
+    }
+    state.gender =newGender;
+    }
+}
+</pre></table></code></div></div><h4 id="stack"><span class="mr-2">Stack</span><a href="#stack" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>堆栈是由EVM (Ethereum虚拟机)维护的非持久性数据。EVM使用堆栈数据位置在执行期间加载变量。堆栈位置最多有1024个级别的限制。</p><p>可以看到，要永久性存储，可以保存在存储区(Storage)。</p><blockquote><p>保存很小的局部变量 免费使用 但有数量限制</p></blockquote><h3 id="数据位置规则"><span class="mr-2">数据位置规则</span><a href="#数据位置规则" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><h4 id="规则1--状态变量"><span class="mr-2">规则1 – 状态变量</span><a href="#规则1--状态变量" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>状态变量总是存储在存储区中。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>pragma solidity ^0.5.0;  
+
+contract DataLocation {  
+
+   // storage     
+   uint stateVariable;  
+   uint[] stateArray;  
+}  
+</pre></table></code></div></div><p>此外，不能显式地标记状态变量的位置。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>pragma solidity ^0.5.0;  
+
+contract DataLocation {  
+
+   uint storage stateVariable; // 错误  
+   uint[] memory stateArray; // 错误  
+} 
+</pre></table></code></div></div><h4 id="规则2--函数参数与返回值"><span class="mr-2">规则2 – 函数参数与返回值</span><a href="#规则2--函数参数与返回值" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>函数参数包括返回参数都存储在内存中。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>pragma solidity ^0.5.0;  
+
+contract DataLocation {  
+
+   // storage     
+   uint stateVariable;  
+   uint[] stateArray;  
+
+   function calculate(uint num1, uint num2) public pure returns (uint result) {
+       return num1 + num2
+   }
+} 
+</pre></table></code></div></div><p>此处，函数参数 <code class="language-plaintext highlighter-rouge">uint num1</code> 与 <code class="language-plaintext highlighter-rouge">uint num2</code>，返回值 <code class="language-plaintext highlighter-rouge">uint result</code> 都存储在内存中。</p><h4 id="规则3--局部变量"><span class="mr-2">规则3 – 局部变量</span><a href="#规则3--局部变量" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>值类型的局部变量存储在内存中。但是，对于引用类型，需要显式地指定数据位置。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre>pragma solidity ^0.5.0;  
+
+contract Locations {  
+
+  /* 此处都是状态变量 */  
+
+  // 存储在storage中  
+  bool flag;  
+  uint number;  
+  address account;  
+
+  function doSomething() public  {  
+
+    /* 此处都是局部变量  */  
+
+    // 值类型
+    // 所以它们被存储在内存中
+    bool flag2;  
+    uint number2;  
+    address account2;  
+
+    // 引用类型，需要显示指定数据位置，此处指定为内存
+    uint[] memory localArray;        
+  }  
+}  
+</pre></table></code></div></div><p>不能显式覆盖具有值类型的局部变量。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>  function doSomething() public  {  
+
+    /* 此处都是局部变量  */  
+    // 值类型
+    bool memory flag2;  // 错误
+    uint Storage number2;  // 错误 
+    address account2;  
+
+  }   
+
+</pre></table></code></div></div><h4 id="规则4--外部函数的参数"><span class="mr-2">规则4 – 外部函数的参数</span><a href="#规则4--外部函数的参数" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p>外部函数的参数(不包括返回参数)存储在Calldata中。</p><h2 id="solidity数据类型"><span class="mr-2">solidity数据类型</span><a href="#solidity数据类型" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Solidity 是一种静态类型语言，这意味着每个变量（状态变量和局部变量）都需要在编译时指定变量的类型。</p><p>Solidity中，变量类型有以下几大类：</p><ul><li>值类型<li>地址类型<li>引用类型</ul><p><a href="../../assets/blog_res/2023-07-07-sol.assets/image-20230806231920054.png" class="popup img-link "><img data-src="../../assets/blog_res/2023-07-07-sol.assets/image-20230806231920054.png" alt="image-20230806231920054" class="lazyload" data-proofer-ignore></a></p><h3 id="值类型"><span class="mr-2">值类型</span><a href="#值类型" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th style="text-align: left">类型<th style="text-align: left">保留字<th style="text-align: left">取值<tbody><tr><td style="text-align: left">布尔型<td style="text-align: left">bool<td style="text-align: left">true/false<tr><td style="text-align: left">整型<td style="text-align: left">int/uint<td style="text-align: left">有符号整数/无符号整数。<tr><td style="text-align: left">整型<td style="text-align: left">int8 to int256<td style="text-align: left">8位到256位的带符号整型数。int256与int相同。<tr><td style="text-align: left">整型<td style="text-align: left">uint8 to uint256<td style="text-align: left">8位到256位的无符号整型。uint256和uint是一样的。<tr><td style="text-align: left">定长浮点型<td style="text-align: left">fixed/unfixed<td style="text-align: left">有符号和无符号的定长浮点型<tr><td style="text-align: left">定长浮点型<td style="text-align: left">fixedMxN<td style="text-align: left">带符号的定长浮点型，其中M表示按类型取的位数，N表示小数点。M应该能被8整除，从8到256。N可以是0到80。fixed与fixed128x18相同。<tr><td style="text-align: left">定长浮点型<td style="text-align: left">ufixedMxN<td style="text-align: left">无符号的定长浮点型，其中M表示按类型取的位数，N表示小数点。M应该能被8整除，从8到256。N可以是0到80。fixed与fixed128x18相同。</table></div><h3 id="地址类型"><span class="mr-2">地址类型</span><a href="#地址类型" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>地址类型表示以太坊地址，长度为20字节。地址可以使用<code class="language-plaintext highlighter-rouge">.balance</code>方法获得余额，也可以使用<code class="language-plaintext highlighter-rouge">.transfer</code>方法将余额转到另一个地址。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>address x = 0x212;
+address myAddress = this;
+
+if (x.balance &lt; 10 &amp;&amp; myAddress.balance &gt;= 10) 
+    x.transfer(10);
+</pre></table></code></div></div><h3 id="引用类型"><span class="mr-2">引用类型</span><a href="#引用类型" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Solidity中，有一些数据类型由值类型组合而成，相比于简单的值类型，这些类型通常通过名称引用，被称为引用类型。</p><p>引用类型包括：</p><ul><li>数组 (字符串与bytes是特殊的数组，所以也是引用类型)<li>struct (结构体)<li>map (映射)</ul><p>“<code class="language-plaintext highlighter-rouge">undefined</code>”或“<code class="language-plaintext highlighter-rouge">null</code>”值的概念在Solidity中不存在，但是新声明的变量总是有一个 默认值 ，具体的默认值跟类型相关。 要处理任何意外的值，应该使用错误处理来恢复整个交易，或者返回一个带有第二个<code class="language-plaintext highlighter-rouge">bool</code> 值的元组表示成功。</p><h3 id="bool类型"><span class="mr-2">bool类型</span><a href="#bool类型" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>布尔值的取值范围为 true 和 false 。</p><p>默认值：<code class="language-plaintext highlighter-rouge">false</code></p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>pragma solidity ^0.8.0;
+
+contract TestBool {
+  error NotEqual(bool A,bool B);
+	bool public A; // false
+	bool public B = true;	//true
+  	// require(A==B,"A not equal B");
+
+  if (A != B) {
+    error NotEqual(A,B);
+  }
+}
+</pre></table></code></div></div><p>运算符：</p><ul><li>!（逻辑非）<li>&amp;&amp; （逻辑与， “and” ）<li><div class="table-wrapper"><table><tbody><tr><td> <td>（逻辑或， “or” ）</table></div><li>== （等于）<li>!= （不等于）</ul><h3 id="intuint整数类型"><span class="mr-2">int、uint整数类型</span><a href="#intuint整数类型" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p><code class="language-plaintext highlighter-rouge">int/uint：</code>变长的<strong>有符号</strong>或<strong>无符号</strong>整型。变量支持的步长以<code class="language-plaintext highlighter-rouge">8</code>递增，支持从<code class="language-plaintext highlighter-rouge">uint8</code>到<code class="language-plaintext highlighter-rouge">uint256</code>，以及<code class="language-plaintext highlighter-rouge">int8</code>到<code class="language-plaintext highlighter-rouge">int256</code>。需要注意的是，<code class="language-plaintext highlighter-rouge">uint</code>和<code class="language-plaintext highlighter-rouge">int</code>默认代表的是<code class="language-plaintext highlighter-rouge">uint256</code>和<code class="language-plaintext highlighter-rouge">int256</code>。</p></blockquote><p><code class="language-plaintext highlighter-rouge">int</code> 有符号整型(包含负数)</p><p>默认为<code class="language-plaintext highlighter-rouge">int256</code></p><p>不同位长的整形范围如下：</p><ul><li><code class="language-plaintext highlighter-rouge">int8</code> 取值范围：-(2 ** 7)到 2 ** 7 -1<li><code class="language-plaintext highlighter-rouge">int16</code>取值范围：-(2 ** 15)到 2 ** 15 -1<li>…<li><code class="language-plaintext highlighter-rouge">intX</code>取值范围：-(2<strong><code class="language-plaintext highlighter-rouge">X</code>-1)到 2</strong>(<code class="language-plaintext highlighter-rouge">X</code>-1) -1<li><code class="language-plaintext highlighter-rouge">int256</code>取值范围：-(2 ** 255)到 2 ** 255 -1</ul><p><code class="language-plaintext highlighter-rouge">uint</code> 无符号整型</p><p>默认为<code class="language-plaintext highlighter-rouge">uint256</code></p><p>不同位长的整形范围如下：</p><ul><li><code class="language-plaintext highlighter-rouge">uint8</code>取值范围：0 到 2 ** 8 - 1<li><code class="language-plaintext highlighter-rouge">uint16</code>取值范围：0 到 2 ** 16 - 1<li>…<li><code class="language-plaintext highlighter-rouge">uintX</code>取值范围：0 到 2 ** <code class="language-plaintext highlighter-rouge">X</code> - 1<li><code class="language-plaintext highlighter-rouge">uint256</code>取值范围：0 到 2 ** 256 - 1</ul><p>对于整形 X，可以使用 type(X).min 和 type(X).max 去获取这个类型的最小值与最大值。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract TestIntval {
+  	int8 public i8 = -1;
+    int public i256 = 456;
+    int public i = -123; // int 等同于 int256
+    // int 的最大最小值
+    int public minInt = type(int).min;
+    int public maxInt = type(int).max;
+
+    uint8 public u8 = 1;
+    uint256 public u256 = 456;
+    uint public u = 123; // uint  等同于 uint256 
+		// uint 的最大最小值
+    uint public minUInt = type(uint).min;
+    uint public maxUInt = type(uint).max;
+
+    
+    function mini() public pure returns(uint8){
+        return type(uint8).max;
+    }
+}
+</pre></table></code></div></div><h3 id="address地址"><span class="mr-2">address/地址</span><a href="#address地址" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>默认值: 0x0000000000000000000000000000000000000000</p><p>20字节的16进制地址用来表示一个账户 或者合约地址</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract TestAddress {
+    //与其他机器语言相区别的类型就是这个address 类型，160-bit/20byte
+    address public myAddr = 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
+    //合约自己的地址
+    address contractAddress = address(this);
+    //跟普通的地址类型一样，但多了两个方法 transfer/send 这两个方法后面章节会讲到
+    // address sender = payable(0x5B38Da6a701c568545dCfcB03FcB875f56beddC4);
+  	//可以使用 balance 属性来查询一个地址的余额
+    function getBalance()
+        public view
+        returns (uint256, uint256)
+    {
+        require(myAddr.balance &lt; contractAddress.balance, "1 must lg 2");
+        return (myAddr.balance, contractAddress.balance);
+    }
+}
+</pre></table></code></div></div><h3 id="bytes字节数组"><span class="mr-2">bytes/字节数组</span><a href="#bytes字节数组" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>在计算机中的最小存储单位是 bit(位)</p><ul><li>1byte等于8位<li><p>Solidity中，byte可以赋值为</p><li><ul><li>16进制数字<li>单引号的单个或多个字符</ul></ul><p>定长字节数组</p><p>bytes1 后面数字1是表示1字节 bytes默认等于bytes1 Bytes2 后面数字2是表示2字节 Bytes3 后面数字3是表示3字节 bytes4 后面数字4是表示4字节</p><p>…</p><p>bytes32 后面数字32是表示32字节</p><p>bytes32 等价于 int256或uint256 的位数</p><p>成员变量</p><p><code class="language-plaintext highlighter-rouge">.length</code> 表示这个字节数组的长度（只读）</p><h3 id="string字符串"><span class="mr-2">string/字符串</span><a href="#string字符串" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ol><li>中文特殊字符需要用<code class="language-plaintext highlighter-rouge">unicode</code>编码<li>通过concat 方法进行拼接<li>bytes 和 string之间转化<li><code class="language-plaintext highlighter-rouge">string</code>字符串不能通过<code class="language-plaintext highlighter-rouge">length</code>方法获取其长度。<li><code class="language-plaintext highlighter-rouge">keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2)) </code>可以通过这个方法比较两个字符串是否相等。<li><code class="language-plaintext highlighter-rouge">abi.encodePacked(s1, s2)</code>:通过这个方法进行字符串合并拼接。</ol><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract TestAddress {
+    string public str1 = "123";
+    // 中文不适用unicode编码报错
+    // string public str2 = ="你好";
+    string public str2 = unicode"abc";
+    function concat() public view returns(string memory) {
+        string memory result = string.concat(str1,str2);
+        return  result;
+    }
+
+    function caoncat2(string memory _a, string memory _b) public pure returns(string memory) {
+        return string.concat(_a,_b);
+    }
+     function caoncat3(string memory _a, string memory _b) public pure returns(bytes memory) {
+          bytes memory _ba = bytes(_a);
+        bytes memory _bb = bytes(_b);
+        return bytes.concat(_ba,_bb);
+    }
+      function caoncat4(string memory _a, string memory _b) public pure returns(string memory) {
+        bytes memory _ba = bytes(_a);
+        bytes memory _bb = bytes(_b);
+        return string(bytes.concat(_ba,_bb));
+    }
+     // 比较s1和s2是否相等，相等返回true，不相等返回false
+    function compareEqual(string memory s1, string memory s2)
+        public
+        pure
+        returns (bool)
+    {   
+        // 不支持字符直接比较
+        return s1 == s2;
+        // return keccak256(abi.encodePacked(s1)) == keccak256(abi.encodePacked(s2));
+    }
+
+    // 将s1和s2合并为一个字节数组
+    function mergeS1AndS2ReturnBytes(string memory s1, string memory s2)
+        public
+        pure
+        returns (bytes memory)
+    {
+        return abi.encodePacked(s1, s2);
+    }
+
+    // 将s1和s2合并为一个字节数组转换为string
+    function mergeS1AndS2ReturnString(string memory s1, string memory s2)
+        public
+        pure
+        returns (string memory)
+    {
+        return string(abi.encodePacked(s1, s2));
+    }
+}
+</pre></table></code></div></div><h3 id="enum枚举"><span class="mr-2">Enum(枚举)</span><a href="#enum枚举" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>枚举将一个变量的取值限制为几个预定义值中的一个。精确使用枚举类型有助于减少代码中的bug。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre><td class="rouge-code"><pre>contract UserState {
+  // 枚举
+  //默认值是列表中的第一个元素
+  enum State { 
+    Online,  	// 0
+    Offline,	// 1
+    Unknown		// 2
+  } 
+
+//枚举类型实例化变量status
+  State public status;
+  function get() public view returns (State) {
+      return status;
+  }
+  // 通过将uint传递到输入来更新状态
+  function set(State _status) public {
+      status = _status;
+  }
+  // 也可以是这样确定属性的更新
+  function off() public {
+      status = State.Offline;
+  }
+  // delete 将枚举重置为其第一个值 0
+  function reset() public {
+      delete status;
+  }
+}
+</pre></table></code></div></div><h3 id="array数组"><span class="mr-2">array/数组</span><a href="#array数组" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>T[k]: 元素类型为T，固定长度为K的数组 uint[5]</p><p>T[]: 元素类型为T, 长度可以动态调整</p></blockquote><h4 id="一固定长度的数组arrays"><span class="mr-2">一、固定长度的数组（Arrays）</span><a href="#一固定长度的数组arrays" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity &gt;=0.7.0 &lt;0.9.0;
+
+contract MappingTest {
+    // 创建定长数组
+    uint256[5] public arr = [1, 2, 3, 4, 5];
+
+    // 定长数组求和
+    function getAll() public view returns (uint256) {
+        uint256 num = 0;
+        for (uint256 i = 0; i &lt; arr.length; i++) {
+            num += arr[i];
+        }
+        return num;
+    }
+
+    function get() public view returns (uint256[5] memory) {
+        return arr;
+    }
+
+    // 获取定长数组长度
+    function getLenth() public view returns (uint256) {
+        return arr.length;
+    }
+
+    // 修改长度失败
+    function changeLenth() public {
+        // arr.length = 7;
+    }
+
+    // 修改内部数据
+    function change(uint256 _idx, uint256 _val) public {
+        arr[_idx] = _val;
+    }
+
+    // push 定长数组不能用push方法
+    // function change(uint256 _val) public {
+    //     arr.push(_val);
+    // }
+}
+
+</pre></table></code></div></div><h4 id="二可变长度的arrays"><span class="mr-2">二、可变长度的Arrays</span><a href="#二可变长度的arrays" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><p><code class="language-plaintext highlighter-rouge">uint [] T = [1,2,3,4,5]</code>，这句代码表示声明了一个可变长度的<code class="language-plaintext highlighter-rouge">T</code>数组，因为我们给它初始化了<code class="language-plaintext highlighter-rouge">5</code>个无符号整数，所以它的长度默认为<code class="language-plaintext highlighter-rouge">5</code>。</p><p><code class="language-plaintext highlighter-rouge">&gt;=0.5.0</code>的版本中<code class="language-plaintext highlighter-rouge">length</code>方法只读，不可修改。 5版本之前支持length属性修改，缺失的以0补位</p><pre><code class="language-solidity">uint [] T = [1,2,3,4,5];
+</code></pre><h4 id="三二维数组---数组里面放数组"><span class="mr-2">三、二维数组 - 数组里面放数组</span><a href="#三二维数组---数组里面放数组" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract C {
+    uint256[2][3] T = [[1, 2], [3, 4], [5, 6]];
+
+    function T_len() public view returns (uint256) {
+        return T.length; // uint256: 3
+    }
+
+     function getT() public view returns (uint256[2][3] memory) {
+        return T;
+    }    
+
+    function change() public {
+        T[1][0] = 55;
+    }
+}
+
+</pre></table></code></div></div><p><code class="language-plaintext highlighter-rouge">uint [2][3] T = [[1,2],[3,4],[5,6]]</code>这是一个三行两列的数组，你会发现和Java、C语言等的其它语言中二位数组里面的列和行之间的顺序刚好相反。在其它语言中，上面的内容应该是这么存储<code class="language-plaintext highlighter-rouge">uint [2][3] T = [[1,2,3],[4,5,6]]</code>。</p><p>上面的<code class="language-plaintext highlighter-rouge">数组T</code>是<code class="language-plaintext highlighter-rouge">storage</code>类型的数组，对于<code class="language-plaintext highlighter-rouge">storage</code>类型的数组，数组里面可以存放任意类型的值（比如：其它数组，结构体，字典／映射等等）。对于<code class="language-plaintext highlighter-rouge">memory</code>类型的数组，如果它是一个<code class="language-plaintext highlighter-rouge">public</code>类型的函数的参数，那么它里面的内容不能是一个<code class="language-plaintext highlighter-rouge">mapping(映射／字典)</code>，并且它必须是一个<code class="language-plaintext highlighter-rouge">ABI</code>类型。</p><h4 id="四数组字面量-array-literals--内联数组-inline-arrays"><span class="mr-2">四、数组字面量 Array Literals / 内联数组 Inline Arrays</span><a href="#四数组字面量-array-literals--内联数组-inline-arrays" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity &gt;=0.7.0 &lt;0.9.0;
+contract C {
+    
+    function f() pure public {
+        g([1, 2, 3]); 
+        g([uint(1),2,3])
+    }
+    
+    function g(uint[3] memory _data) pure public {
+        // ...
+    }
+}
+</pre></table></code></div></div><h3 id="结构体-struct"><span class="mr-2">结构体 struct</span><a href="#结构体-struct" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>通过基本数据类型来组合成自定义复杂的数据类型</p></blockquote><p>语法结构:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>struct 关键字  结构体名称 {
+	类型1  属性名1;
+	类型2  属性名2；
+	....
+}
+</pre></table></code></div></div><p>声明结构体</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>struct Person {
+	uint8 age;
+	string id;
+	string name;
+}
+</pre></table></code></div></div><p>创建结构变量</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>结构体 变量名 = 结构体(属性1，属性2，...)
+结构体 变量名 = 结构体({属性1：value1，属性2：value2Ï})
+
+Person student1 = Person(18,1,"柯南")；
+Person student2 = Person({age:17, id: 2, name: "迪迦Ï"})
+</pre></table></code></div></div><p>修改结构体变量</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>function setStudent(uint _age, string _name) public {
+	student1.age = _age
+	student1.name = _name
+}
+</pre></table></code></div></div><p>函数中返回结构体</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>function getStudent() public view returns(Person) {
+	return student1
+}
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre><td class="rouge-code"><pre>contract Structs {
+    struct Todo {
+        string text;
+        bool completed;
+    }
+    // 结构体数组
+  
+    Todo[] public todos;
+
+    // 初始化结构的3种方法
+    function create(string calldata _text) public {
+        // 1.像函数一样调用它
+        todos.push(Todo(_text, false));
+        // 2. 键值对
+        todos.push(Todo({text: _text, completed: false}));
+        // 3.初始化一个空结构，然后更新它
+        Todo memory todo;
+        todo.text = _text;
+        todos.push(todo);// completed 没有定义,默认为 false
+    }
+    //通过索引获取结构体数组中一个元素,并更新内部的属性
+    function update(uint _index) public {
+        Todo storage todo = todos[_index];
+        todo.completed = !todo.completed;
+    }
+}
+</pre></table></code></div></div><h3 id="字典映射mappings"><span class="mr-2">字典／映射（Mappings)</span><a href="#字典映射mappings" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>与数组和结构体一样，映射也是引用类型。</p><p>是一个一对一键值存储关系。</p><p>可以理解成js中的对象</p></blockquote><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>mapping(_KeyType =&gt; _ValueType)
+</pre></table></code></div></div><ul><li><code class="language-plaintext highlighter-rouge">_KeyType</code> – 可以是任何内置类型，或者bytes和字符串。不允许使用引用类型或复杂对象。<li><code class="language-plaintext highlighter-rouge">_ValueType</code> – 可以是任何类型。</ul><p><strong>注意</strong></p><ul><li>映射的数据位置(data location)只能是<code class="language-plaintext highlighter-rouge">storage</code>，通常用于状态变量。<li>映射可以标记为<code class="language-plaintext highlighter-rouge">public</code>，Solidity 自动为它创建getter。<li>mapping 不能直接在函数返回</ul><p>创建mapping</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>contract MappingTest {
+    mapping(address =&gt; uint256) public balances;
+
+    function update(uint256 _amount) public {
+        balances[msg.sender] = _amount;
+    }
+
+    function getAmount() public view  returns(uint){
+        return balances[msg.sender];
+    }
+}
+
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre>contract LedgerBalance {
+   mapping(address =&gt; uint) public balances;
+
+   function updateBalance(uint newBalance) public {
+      balances[msg.sender] = newBalance;
+   }
+}
+contract Updater {
+   function updateBalance() public returns (uint) {
+      LedgerBalance ledgerBalance = new LedgerBalance();
+      ledgerBalance.updateBalance(10);
+      return ledgerBalance.balances(address(this));
+   }
+}
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre><td class="rouge-code"><pre>contract Mapping {
+    //从地址到uint的映射
+    mapping(address =&gt; uint) public myMap;
+
+    function get(address _addr) public view returns (uint) {
+        //映射始终返回一个值。
+				//如果从未设置该值，它将返回默认值。
+        return myMap[_addr];
+    }
+    // 更新此地址的值 	
+    function set(address _addr, uint _i) public {
+        myMap[_addr] = _i;
+    }
+
+    function remove(address _addr) public {
+				//将值重置为默认值
+        delete myMap[_addr];
+    }
+}
+//嵌套 mapping
+contract NestedMapping {
+    //嵌套映射（从地址映射到另一个映射）
+    mapping(address =&gt; mapping(uint =&gt; bool)) public nested;
+
+    function get(address _addr1, uint _i) public view returns (bool) {
+        // 可以从嵌套映射中获取值
+        return nested[_addr1][_i];
+    }
+
+    function set(
+        address _addr1,
+        uint _i,
+        bool _boo
+    ) public {
+        nested[_addr1][_i] = _boo;
+    }
+
+    // 删除 mapping 的一个元素
+    function remove(address _addr1, uint _i) public {
+        delete nested[_addr1][_i];
+    }
+}
+
+</pre></table></code></div></div><h2 id="solidity运算符"><span class="mr-2">Solidity运算符</span><a href="#solidity运算符" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="算术"><span class="mr-2">算术</span><a href="#算术" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th style="text-align: left">序号<th style="text-align: left">运算符与描述<tbody><tr><td style="text-align: left">1<td style="text-align: left"><strong>+ (加)</strong> 求和 <strong>例:</strong> A + B = 30<tr><td style="text-align: left">2<td style="text-align: left"><strong>– (减)</strong> 相减 <strong>例:</strong> A – B = -10<tr><td style="text-align: left">3<td style="text-align: left"><strong>* (乘)</strong> 相乘 <strong>例:</strong> A * B = 200<tr><td style="text-align: left">4<td style="text-align: left"><strong>/ (除)</strong> 相除 <strong>例:</strong> B / A = 2<tr><td style="text-align: left">5<td style="text-align: left"><strong>% (取模)</strong> 取模运算 <strong>例:</strong> B % A = 0<tr><td style="text-align: left">6<td style="text-align: left"><strong>++ (递增)</strong> 递增 <strong>例:</strong> A++ = 11<tr><td style="text-align: left">7<td style="text-align: left"><strong>— (递减)</strong> 递减 <strong>例:</strong> A– = 9</table></div><h3 id="比较"><span class="mr-2">比较</span><a href="#比较" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th style="text-align: left">序号<th style="text-align: left">运算符与描述<tbody><tr><td style="text-align: left">1<td style="text-align: left"><strong>== (等于)</strong><tr><td style="text-align: left">2<td style="text-align: left"><strong>!= (不等于)</strong><tr><td style="text-align: left">3<td style="text-align: left"><strong>&gt; (大于)</strong><tr><td style="text-align: left">4<td style="text-align: left"><strong>&lt; (小于)</strong><tr><td style="text-align: left">5<td style="text-align: left"><strong>&gt;= (大于等于)</strong><tr><td style="text-align: left">6<td style="text-align: left"><strong>&lt;= (小于等于)</strong></table></div><h3 id="逻辑"><span class="mr-2">逻辑</span><a href="#逻辑" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th style="text-align: left">序号<th style="text-align: left">运算符与描述<tbody><tr><td style="text-align: left">1<td style="text-align: left"><strong>&amp;&amp; (逻辑与)</strong> 如果两个操作数都非零，则条件为真。 <strong>例:</strong> (A &amp;&amp; B) 为真<tr><td style="text-align: left">2<td style="text-align: left"><strong>|| (逻辑或)</strong> 如果这两个操作数中有一个非零，则条件为真。 <strong>例:</strong> (A || B) 为真<tr><td style="text-align: left">3<td style="text-align: left"><strong>! (逻辑非)</strong> 反转操作数的逻辑状态。如果条件为真，则逻辑非操作将使其为假。 <strong>例:</strong> ! (A &amp;&amp; B) 为假</table></div><h3 id="位运算符"><span class="mr-2">位运算符</span><a href="#位运算符" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th style="text-align: left">序号<th style="text-align: left">运算符与描述<tbody><tr><td style="text-align: left">1<td style="text-align: left"><strong>&amp; (位与)</strong> 对其整数参数的每个位执行位与操作。 <strong>例:</strong> (A &amp; B) 为 2.<tr><td style="text-align: left">2<td style="text-align: left"><strong>| (位或)</strong> 对其整数参数的每个位执行位或操作。 <strong>例:</strong> (A | B) 为 3.<tr><td style="text-align: left">3<td style="text-align: left"><strong>^ (位异或)</strong> 对其整数参数的每个位执行位异或操作。 <strong>例:</strong> (A ^ B) 为 1.<tr><td style="text-align: left">4<td style="text-align: left"><strong>~ (位非)</strong> 一元操作符，反转操作数中的所有位。 <strong>例:</strong> (~B) 为 -4.<tr><td style="text-align: left">5<td style="text-align: left"><strong>« (左移位))</strong> 将第一个操作数中的所有位向左移动，移动的位置数由第二个操作数指定，新的位由0填充。将一个值向左移动一个位置相当于乘以2，移动两个位置相当于乘以4，以此类推。 <strong>例:</strong> (A « 1) 为 4.<tr><td style="text-align: left">6<td style="text-align: left"><strong>» (右移位)</strong> 左操作数的值向右移动，移动位置数量由右操作数指定 <strong>例:</strong> (A » 1) 为 1.</table></div><h3 id="赋值"><span class="mr-2">赋值</span><a href="#赋值" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>solidity 支持的赋值运算符，如下表所示：</p><div class="table-wrapper"><table><thead><tr><th style="text-align: left">序号<th style="text-align: left">运算符与描述<tbody><tr><td style="text-align: left">1<td style="text-align: left"><strong>= (简单赋值)</strong> 将右侧操作数的值赋给左侧操作数 <strong>例:</strong> C = A + B 表示 A + B 赋给 C<tr><td style="text-align: left">2<td style="text-align: left"><strong>+= (相加赋值)</strong> 将右操作数添加到左操作数并将结果赋给左操作数。 <strong>例:</strong> C += A 等价于 C = C + A<tr><td style="text-align: left">3<td style="text-align: left"><strong>−= (相减赋值)</strong> 从左操作数减去右操作数并将结果赋给左操作数。 <strong>例:</strong> C -= A 等价于 C = C – A<tr><td style="text-align: left">4<td style="text-align: left"><strong>*= (相乘赋值)</strong> 将右操作数与左操作数相乘，并将结果赋给左操作数。 <strong>例:</strong> C *= A 等价于 C = C * A<tr><td style="text-align: left">5<td style="text-align: left"><strong>/= (相除赋值)</strong> 将左操作数与右操作数分开，并将结果分配给左操作数。 <strong>例:</strong> C /= A 等价于 C = C / A<tr><td style="text-align: left">6<td style="text-align: left"><strong>%= (取模赋值)</strong> 使用两个操作数取模，并将结果赋给左边的操作数。 <strong>例:</strong> C %= A 等价于 C = C % A</table></div><blockquote><p><strong>注意</strong> – 同样的逻辑也适用于位运算符，因此它们将变成<code class="language-plaintext highlighter-rouge">&lt;&lt;=</code>、<code class="language-plaintext highlighter-rouge">&gt;&gt;=</code>、<code class="language-plaintext highlighter-rouge">&gt;&gt;=</code>、<code class="language-plaintext highlighter-rouge">&amp;=</code>、<code class="language-plaintext highlighter-rouge">|=</code>和<code class="language-plaintext highlighter-rouge">^=</code>。</p></blockquote><h3 id="条件运算符"><span class="mr-2">条件运算符</span><a href="#条件运算符" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="table-wrapper"><table><thead><tr><th style="text-align: left">序号<th style="text-align: left">运算符与描述<tbody><tr><td style="text-align: left">1<td style="text-align: left"><strong>? : (条件运算符 )</strong> 如果条件为真 ? 则取值X : 否则值Y</table></div><h2 id="solidity循环语句"><span class="mr-2">Solidity循环语句</span><a href="#solidity循环语句" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="while"><span class="mr-2">while</span><a href="#while" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>while (表达式) {
+   被执行语句(如果表示为真)
+}
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.0;
+
+contract TestBool {
+    uint256 public num = 10;
+
+    function test(int max) public {
+        int256 start = 1;
+        while (start &lt;= max) {
+            start++;
+            num++;
+        }
+    }
+}
+
+</pre></table></code></div></div><h3 id="dowhile"><span class="mr-2">do…while</span><a href="#dowhile" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Solidity 中， do…while循环的语法如下：</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>do {
+   被执行语句(如果表示为真)
+} while (表达式);
+注意: 不要漏掉do后面的分号。
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.0;
+contract TestBool {
+   uint public num  = 10;
+   function test () public returns(uint) {
+       int  start = 1;
+       int  max = 10;
+       do{
+         start ++;
+         num ++;
+       }while(start &lt;=max);
+       return num;
+   }
+}
+</pre></table></code></div></div><h3 id="for"><span class="mr-2">for</span><a href="#for" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>for (初始化; 测试条件; 迭代语句) {
+   被执行语句(如果表示为真)
+}
+</pre></table></code></div></div><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>contract TestBool {
+    uint256 public num = 10;
+
+    function test(int max) public {
+     for(int256 start = 1; start&lt;max; start ++) {
+         num ++;
+     }
+    }
+}
+
+</pre></table></code></div></div><h3 id="break-与-continue"><span class="mr-2">break 与 continue</span><a href="#break-与-continue" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.0;
+
+contract TestBool {
+    uint256 public num = 10;
+
+    function test(int max) public {
+     for(int256 start = 1; start&lt;max; start ++) {
+         if(start == 1) {
+            //  break;  // 跳出循环 num 10
+            continue; // 跳出本次循环
+        }
+         num ++;
+     }
+    }
+}
+
+</pre></table></code></div></div><h2 id="solidity条件语句"><span class="mr-2">Solidity条件语句</span><a href="#solidity条件语句" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Solidity支持条件语句，让程序可以根据条件执行不同的操作。条件语句包括：</p><ul><li><code class="language-plaintext highlighter-rouge">if</code><li><code class="language-plaintext highlighter-rouge">if...else</code><li><code class="language-plaintext highlighter-rouge">if...else if</code></ul><h2 id="solidity中的函数"><span class="mr-2">Solidity中的函数</span><a href="#solidity中的函数" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="函数修饰符"><span class="mr-2">函数修饰符</span><a href="#函数修饰符" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>函数修饰符用于修改函数的行为。例如，向函数添加条件限制。</p><p>修饰符定义中出现特殊符号<code class="language-plaintext highlighter-rouge">_</code>的地方，用于插入函数体。如果在调用此函数时，满足了修饰符的条件，则执行该函数，否则将抛出异常。</p></blockquote><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity &gt;=0.7.0 &lt;0.9.0;
+
+contract Owner {
+    address owner;
+
+    uint256 price = 10;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    // 定义修饰符 onlyOwner 不带参数
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+    // 使用修饰符 onlyOwner 限制只有发布者才能调用
+    function changePrice(uint256 _price)
+        public
+        view
+        onlyOwner
+        returns (address, uint256)
+    {
+        return (owner, _price);
+    }
+}
+
+</pre></table></code></div></div><h3 id="视图函数view"><span class="mr-2">视图函数（view）</span><a href="#视图函数view" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>View(视图)函数 使用状态变量，但是不修改状态</p></blockquote><p>如果函数中存在以下语句，则被视为修改状态，编译器将抛出警告。</p><ul><li>修改状态变量。<li>触发事件。<li>创建合约。<li>使用<code class="language-plaintext highlighter-rouge">selfdestruct</code>。<li>发送以太。<li>调用任何不是视图函数或纯函数的函数<li>使用底层调用<li>使用包含某些操作码的内联程序集。</ul><p>Getter方法是默认的视图函数。声明视图函数，可以在函数声明里，添加<code class="language-plaintext highlighter-rouge">view</code>关键字。</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.0;
+
+contract Test {
+    function getResult() public view returns (uint256, uint256) {
+        uint256 a = 1; // 局部变量
+        uint256 b = 2;
+        uint256 product = a * b;
+        uint256 sum = a + b;
+        return (product, sum);
+    }
+}
+
+</pre></table></code></div></div><h3 id="纯函数pure"><span class="mr-2">纯函数（Pure）</span><a href="#纯函数pure" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>Pure(纯)函数<strong>不读取</strong>或修改状态。</p><p>声明纯函数，可以在函数声明里，添加<code class="language-plaintext highlighter-rouge">pure</code>关键字。</p></blockquote><p>如果函数中存在以下语句，则被视为读取状态，编译器将抛出警告</p><ul><li>读取状态变量。<li>访问 <code class="language-plaintext highlighter-rouge">address(this).balance</code> 或 <code class="language-plaintext highlighter-rouge">&lt;address&gt;.balance</code><li>访问任何区块、交易、msg等特殊变量(msg.sig 与 msg.data 允许读取)。<li>调用任何不是纯函数的函数。<li>使用包含特定操作码的内联程序集。</ul><p>如果发生错误，纯函数可以使用<code class="language-plaintext highlighter-rouge">revert()</code>和<code class="language-plaintext highlighter-rouge">require()</code>函数来还原潜在的状态更改。</p><h3 id="函数重载"><span class="mr-2">函数重载</span><a href="#函数重载" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>同一个作用域内，相同函数名可以定义多个函数。这些函数的参数(参数类型或参数数量)必须不一样。仅仅是返回值不一样不被允许。</p></blockquote><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.0;
+
+contract Test {
+    function getSum(uint256 a, uint256 b) public pure returns (uint256) {
+        return a + b;
+    }
+
+    function getSum(
+        uint256 a,
+        uint256 b,
+        uint256 c
+    ) public pure returns (uint256) {
+        return a + b + c;
+    }
+}
+</pre></table></code></div></div><h3 id="加密函数"><span class="mr-2">加密函数</span><a href="#加密函数" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>Solidity 提供了常用的加密函数。以下是一些重要函数：</p><ul><li><code class="language-plaintext highlighter-rouge">keccak256(bytes memory) returns (bytes32)</code> 计算输入的Keccak-256散列。<li><code class="language-plaintext highlighter-rouge">sha256(bytes memory) returns (bytes32)</code> 计算输入的SHA-256散列。<li><code class="language-plaintext highlighter-rouge">ripemd160(bytes memory) returns (bytes20)</code> 计算输入的RIPEMD-160散列。<li><code class="language-plaintext highlighter-rouge">ecrecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) returns (address)</code>从椭圆曲线签名中恢复与公钥相关的地址，或在出错时返回零。函数参数对应于签名的ECDSA值: r – 签名的前32字节; s: 签名的第二个32字节; v: 签名的最后一个字节。这个方法返回一个地址。</ul></blockquote><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>contract Test {   
+   function callKeccak256() public pure returns(bytes32 result){
+      return keccak256("ABC");
+   }  
+}
+</pre></table></code></div></div><h2 id="智能合约"><span class="mr-2">智能合约</span><a href="#智能合约" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="介绍"><span class="mr-2">介绍</span><a href="#介绍" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>balance：当前余额</p><p>nonce：交易次数</p><p>code：合约代码</p><p>storage：存储 数据结构是一颗MPT</p><ul><li>执行交易的指令要收取汽油费用，由发起交易的人来支付<li>智能合约不存在try-catch结构<li>一旦遇到异常 除非特别情况 否则本次执行操作全部回滚，但是已经耗掉的gas费用不退<li>可以抛出错误的语句：assert(bool condition)：抛出内部错误；require(bool condition):抛掉用于输入或者外部组件引起的错误<li>revert():终止运行并回滚状态变动</ul><h3 id="合约继承"><span class="mr-2">合约继承</span><a href="#合约继承" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>就像Java、C++中，类的继承一样，Solidity中，合约继承是扩展合约功能的一种方式。Solidity支持单继承和多继承。</p></blockquote><p>Solidity中，合约继承的重要特点：</p><ul><li>派生合约可以访问父合约的所有非私有成员，包括内部方法和状态变量。但是不允许使用<code class="language-plaintext highlighter-rouge">this</code>。<li>如果函数签名保持不变，则允许函数重写。如果输出参数不同，编译将失败。<li>可以使用<code class="language-plaintext highlighter-rouge">super</code>关键字或父合同名称调用父合同的函数。<li>在多重继承的情况下，使用<code class="language-plaintext highlighter-rouge">super</code>的父合约函数调用，优先选择被最多继承的合约。</ul><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="已复制！"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre><td class="rouge-code"><pre>// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.0;
+
+contract Base {
+    uint256 private data;
+    uint256 public info;
+
+    constructor() {
+        info = 10;
+    }
+
+    function increment(uint256 a) private pure returns (uint256) {
+        return a + 1;
+    }
+
+    function updateData(uint256 a) public {
+        data = a;
+    }
+
+    function getData() public view returns (uint256) {
+        return data;
+    }
+
+    function compute(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a + b;
+    }
+}
+
+contract Test is Base {
+    uint256 private result;
+    Base private base;
+
+    constructor() {
+        base = new Base();
+    }
+
+    function getComputedResult() public {
+        result = compute(3, 5);
+    }
+
+    function getResult() public view returns (uint256) {
+        return result;
+    }
+
+}
+</pre></table></code></div></div><h3 id="构造函数"><span class="mr-2">构造函数</span><a href="#构造函数" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><blockquote><p>构造函数是使用<code class="language-plaintext highlighter-rouge">construct</code>关键字声明的特殊函数，用于初始化合约的状态变量。合约中构造函数是可选的，可以省略。</p></blockquote><p>构造函数有以下重要特性：</p><ul><li>一个合约只能有一个构造函数。<li>构造函数在创建合约时执行一次，用于初始化合约状态。<li>在执行构造函数之后，合约最终代码被部署到区块链。合约最终代码包括公共函数和可通过公共函数访问的代码。构造函数代码或仅由构造函数使用的任何内部方法不包括在最终代码中。<li>构造函数可以是公共的，也可以是内部的。<li>内部构造函数将合约标记为抽象合约。<li>如果没有定义构造函数，则使用默认构造函数。</ul><h3 id="fallback函数function-public-payable"><span class="mr-2">fallback()函数:function() public [payable]{}</span><a href="#fallback函数function-public-payable" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><ul><li>匿名函数，没有参数也没有返回值<li>会被调用的情况：直接向一个合约地址转账，而不加任何data；被调用的函数不存在<li>如果转账金额不是0，同样需要声明payable，否则会抛出异常</ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/'>区块链</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" class="post-tag no-text-decoration" >以太坊</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> 本文由作者按照 <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> 进行授权</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">分享</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=solidity%20-%20%E5%B0%8F%E6%9D%8E%E5%AD%A6%E7%BC%96%E7%A8%8B&url=https%3A%2F%2Flibits.github.io%2Fposts%2Fsol%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=solidity%20-%20%E5%B0%8F%E6%9D%8E%E5%AD%A6%E7%BC%96%E7%A8%8B&u=https%3A%2F%2Flibits.github.io%2Fposts%2Fsol%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Flibits.github.io%2Fposts%2Fsol%2F&text=solidity%20-%20%E5%B0%8F%E6%9D%8E%E5%AD%A6%E7%BC%96%E7%A8%8B" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="分享链接" data-title-succeed="链接已复制！"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">最近更新</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/docker/">docker</a><li><a href="/posts/K8s(1)/">K8s基础(1)</a><li><a href="/posts/%E7%96%91%E9%9A%BE%E8%A7%A3%E6%83%91/">疑难解惑</a><li><a href="/posts/react%E5%85%A5%E9%97%A8/">React入门</a><li><a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">复习计算机网络</a></ul></div><div id="access-tags"><div class="panel-heading">热门标签</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/go%E5%B9%B6%E5%8F%91/">Go并发</a> <a class="post-tag" href="/tags/go%E7%AE%97%E6%B3%95/">Go算法</a> <a class="post-tag" href="/tags/go%E5%9F%BA%E7%A1%80/">Go基础</a> <a class="post-tag" href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">以太坊</a> <a class="post-tag" href="/tags/golang%E9%9D%A2%E7%BB%8F/">golang面经</a> <a class="post-tag" href="/tags/go%E7%BD%91%E7%BB%9C/">Go网络</a> <a class="post-tag" href="/tags/hyperledger-fabric/">Hyperledger Fabric</a> <a class="post-tag" href="/tags/kafka/">kafka</a> <a class="post-tag" href="/tags/mysql/">Mysql</a> <a class="post-tag" href="/tags/raft/">raft</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">文章内容</div><nav id="toc"></nav></div><script src="https://cdn.jsdelivr.net/npm/tocbot@4.20.1/dist/tocbot.min.js"></script></div></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4 mt-5"><div id="related-posts" class="mb-2 mb-sm-4"><h3 class="pt-2 mb-4 ml-1" data-toc-skip>相关文章</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%9F%BA%E7%A1%80/"><div class="card-body"> <em class="small" data-ts="1688601600" data-df="YYYY/MM/DD" > 2023/07/06 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>以太坊基础</h3><div class="text-muted small"><p> 以太坊介绍 https://ethereum.org/en 从Pow转为Pos bitcoin 以太坊 基于交易的账本，存在double spending attack 基于账户的模型，存在replay attack 防范：记录发布交易次数nonce ...</p></div></div></a></div><div class="card"> <a href="/posts/ERC/"><div class="card-body"> <em class="small" data-ts="1688774400" data-df="YYYY/MM/DD" > 2023/07/08 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>ERC</h3><div class="text-muted small"><p> ERC ERC 全称是“Ethereum Request for Comment”，表示以太坊的意见征求稿，ERC 中包含技术和组织等注意事项及标准。 token标准 ERC-20 - 同质化（可互换）代币的标准接口，比如投票代币、质押代币或虚拟货币。 ERC-721 - 非同质化代币的标准接口，比如艺术作品或歌曲的契约。 ERC-777 - 关于 ERC-20 的代币标...</p></div></div></a></div><div class="card"> <a href="/posts/%E5%85%B3%E4%BA%8E%E6%8A%95%E7%A5%A8%E5%90%88%E7%BA%A6/"><div class="card-body"> <em class="small" data-ts="1688860800" data-df="YYYY/MM/DD" > 2023/07/09 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>ERC</h3><div class="text-muted small"><p> 关于投票功能的智能合约solidity 功能梳理 主持人创建投票主题与内容 给予“选民”在选票上投票的权利。 把个人的投票委托给投票人。 投票 计算投票结果 获取投票结果 合约代码 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 3...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E5%9F%BA%E7%A1%80/" class="btn btn-outline-primary" prompt="上一篇"><p>以太坊基础</p></a> <a href="/posts/ERC/" class="btn btn-outline-primary" prompt="下一篇"><p>ERC</p></a></div></div></div></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">热门标签</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/go%E5%B9%B6%E5%8F%91/">Go并发</a> <a class="post-tag" href="/tags/go%E7%AE%97%E6%B3%95/">Go算法</a> <a class="post-tag" href="/tags/go%E5%9F%BA%E7%A1%80/">Go基础</a> <a class="post-tag" href="/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">以太坊</a> <a class="post-tag" href="/tags/golang%E9%9D%A2%E7%BB%8F/">golang面经</a> <a class="post-tag" href="/tags/go%E7%BD%91%E7%BB%9C/">Go网络</a> <a class="post-tag" href="/tags/hyperledger-fabric/">Hyperledger Fabric</a> <a class="post-tag" href="/tags/kafka/">kafka</a> <a class="post-tag" href="/tags/mysql/">Mysql</a> <a class="post-tag" href="/tags/raft/">raft</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><footer><div class="container pl-lg-4 pr-lg-4"><div class="d-flex justify-content-between align-items-center text-muted ml-md-3 mr-md-3"><div class="footer-left"><p class="mb-0"> © 2025 <a href="https://twitter.com/username">libits</a>. <span data-toggle="tooltip" data-placement="top" title="除非另有说明，本网站上的博客文章均由作者按照知识共享署名 4.0 国际 (CC BY 4.0) 许可协议进行授权。">保留部分权利。</span></p></div><div class="footer-right"><p class="mb-0">本站由 <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> 生成，采用 <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> 主题。</p></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js"></script> <script> (function () { function updateMermaid(event) { if (event.source === window && event.data && event.data.direction === ModeToggle.ID) { const mode = event.data.message; if (typeof mermaid === "undefined") { return; } let expectedTheme = (mode === ModeToggle.DARK_MODE ? "dark" : "default"); let config = {theme: expectedTheme}; /* Re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function () { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } let initTheme = "default"; if ($("html[data-mode=dark]").length > 0 || ($("html[data-mode]").length == 0 && window.matchMedia("(prefers-color-scheme: dark)").matches)) { initTheme = "dark"; } let mermaidConf = { theme: initTheme /* <default|dark|forest|neutral> */ }; /* Create mermaid tag */ $("pre").has("code.language-mermaid").each(function () { let svgCode = $(this).children().html(); $(this).addClass("unloaded"); $(this).after(`<pre class=\"mermaid\">${svgCode}</pre>`); }); mermaid.initialize(mermaidConf); window.addEventListener("message", updateMermaid); })(); </script><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">搜索结果为空</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lazysizes@5.3.2/lazysizes.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/zh.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/unregister.js"></script>
